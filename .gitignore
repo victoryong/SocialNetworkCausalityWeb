@@ -1,0 +1,9 @@
+# Directories
+/Data/*
+/Data/word2vec/*
+/Data/doc2vec/*
+__pycache__/*
+tempPy/*
+
+# Files
+*.pyc
