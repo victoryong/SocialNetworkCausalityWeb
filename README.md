@@ -1,4 +1,4 @@
-# SocialNetworkCausality_web
+# SocialNetworkCausalityWeb
 Infer causal orders of users in social network(here we mean sina weibo) and extend it into a web project. The project is created to do some experiment about causality, which is my postgraduate research direction. Data is collected from sina weibo, including userid, weibo text. 
 
 ## Data collection
@@ -12,7 +12,7 @@ Sequence is ...
 ...
 2vec model training...
 
-## infer causal order
+## Infer causal orders
 ### Transfer Entropy
 ..
 

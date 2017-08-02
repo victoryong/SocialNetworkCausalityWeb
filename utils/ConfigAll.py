@@ -51,9 +51,12 @@ ResultFile = '{modelType}/Result'
 N_DataConfig = {'N_Samples': 8760, 'N_Dims': 100, 'N_Users': 21}
 
 # 2vec model dir
-w2vDir = 'E:/StudyTime!/Causality/Projects/毕业设计/SocialNetwork_web/Data/word2vec'
-d2vDir = 'E:/StudyTime!/Causality/Projects/毕业设计/SocialNetwork_web/Data/doc2vec'
+w2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/word2vec'
+d2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/doc2vec'
+# w2vDir = '~/xy/PycharmProject/SocialNetwork_web/Data/word2vec' # Linux
+# d2vDir = '~/xy/PycharmProject/SocialNetwork_web/Data/doc2vec' # Linux
 w2v_or_d2v = 1  # 0 for w2v and others for d2v
+# w2v_or_d2v = 0
 
 if __name__ == '__main__':
     os.mkdir(w2vDir)
