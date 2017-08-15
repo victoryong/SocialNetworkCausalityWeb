@@ -45,6 +45,7 @@ FileNameTemplate = 'Data/{dataType}_{samples}_{topics}_{users}.{postfix}'
 UidFile = 'UserId'
 SeqFile = 'Sequence'
 VecFile = '{modelType}/Vectors'
+PcaVecFile = '{modelType}/PCAVectors'
 TextFile = 'Text'
 ResultFile = '{modelType}/Result'
 
@@ -55,8 +56,12 @@ w2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/word2vec'
 d2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/doc2vec'
 # w2vDir = '~/xy/PycharmProject/SocialNetwork_web/Data/word2vec' # Linux
 # d2vDir = '~/xy/PycharmProject/SocialNetwork_web/Data/doc2vec' # Linux
-w2v_or_d2v = 1  # 0 for w2v and others for d2v
+w2v_or_d2v = 0  # 0 for w2v and others for d2v
 # w2v_or_d2v = 0
+
+use_pca_vec = True  # False for original vectors and True for pca vectors
+need_to_perform_pca = False
+
 
 if __name__ == '__main__':
     os.mkdir(w2vDir)

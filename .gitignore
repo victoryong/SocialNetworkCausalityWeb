@@ -4,6 +4,8 @@
 /Data/doc2vec/*
 __pycache__/*
 tempPy/*
+/utils/knn/*
 
 # Files
 *.pyc
+*.zip

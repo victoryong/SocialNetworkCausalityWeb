@@ -4,6 +4,7 @@ from jpype import *
 import numpy as np
 
 from utils.ConfigAll import N_Topics
+from utils.knn.te_multivar_ksg import TECalculatorMultiVarKraskov
 
 
 class LocalTransferEntropy:
@@ -20,11 +21,12 @@ class LocalTransferEntropy:
         self.teCalc = te_calc_class()  # te_calc_class.COND_MI_CALCULATOR_KRASKOV2
         self.teCalc.setProperty("PROP_K", '3')  # Use Kraskov parameter K=4 for 4 nearest points
         self.teCalc.setProperty("PROP_KRASKOV_ALG_NUM", "1")
+        self.teCalc.setProperty("NOISE_LEVEL_TO_ADD", "1e-18")
         # self.teCalc.initialise(k, source_k, dest_k)
         print(self.teCalc.props)
         return self
 
-    def calculate_lte(self, source, dest):
+    def compute_lte(self, source, dest):
         # Perform calculation with correlated source:
         if not len(source) or not len(dest):
             print("ERROR!!")
@@ -50,6 +52,40 @@ class LocalTransferEntropy:
     def close(self):
         shutdownJVM()
 
+
+class LocalTransferEntropyPy:
+    def __init__(self):
+        self.teCalc = TECalculatorMultiVarKraskov()
+
+    def set_properties(self, **kwargs):
+        self.teCalc.set_property("k", "3")
+        self.teCalc.set_property("normtype", "np.inf")
+        self.teCalc.set_property("PROP_KRASKOV_ALG_NUM", "1")
+        self.teCalc.set_property("PROP_ADD_NOISE", "1e-18")
+        for i in kwargs:
+            self.teCalc.set_property(str(i), str(kwargs.get(i)))
+        return self
+
+    def compute_lte(self, source, dest):
+        if not len(source) or not len(dest):
+            raise Exception("Length of source or destination is 0. ")
+        source_k = len(source[0])
+        dest_k = len(dest[0])
+
+        self.teCalc.initialise(source_k, dest_k, 1, 1, 1, 1, 1)
+        self.teCalc.set_observations(source, dest)
+        result1 = self.teCalc.compute_average_local()
+        result = self.teCalc.compute_local()
+        print(result1)
+        print(result)
+
+        self.teCalc.initialise(dest_k, source_k, 1, 1, 1, 1, 1)
+        self.teCalc.set_observations(dest, source)
+        result2 = self.teCalc.compute_average_local()
+        result = self.teCalc.compute_local()
+        print(result2)
+        print(result)
+        return result1, result2
 
 if __name__ == '__main__':
     a = [[1., 550., 1.], [0., 450., 1.], [0., 0., 0.], [0., 0., 1.], [0., 0., 0.], [0., 0., 1.], [0., 0., 0.], [0., 0., 1.],

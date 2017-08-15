@@ -9,9 +9,9 @@ Vectors are generated in last step StartW2vModel.
 """
 import numpy as np
 import csv
-from utils.ConfigAll import N_DataConfig, FileNameTemplate, VecFile, ResultFile, w2v_or_d2v
+from utils.ConfigAll import N_DataConfig, FileNameTemplate, VecFile, PcaVecFile, ResultFile, w2v_or_d2v, use_pca_vec
 from utils.Logging import get_console_logger
-from utils.lte import LocalTransferEntropy
+from utils.lte import LocalTransferEntropy, LocalTransferEntropyPy
 
 logger = get_console_logger('StartLte')
 
@@ -21,6 +21,7 @@ def start_lte(vec):
     print(vec.shape)
     n_user = vec.shape[0]
     lte = LocalTransferEntropy(jar_location='./lib/infodynamics.jar').set_lte_property()
+    # lte = LocalTransferEntropyPy().set_properties()
     result = np.zeros((n_user, n_user))
     # a = vec[0].tolist()
     # b = vec[10].tolist()
@@ -30,7 +31,7 @@ def start_lte(vec):
         for j in range(i):
             a = vec[i].tolist()
             b = vec[j].tolist()
-            result[i][j], result[j][i] = lte.calculate_lte(a, b)
+            result[i][j], result[j][i] = lte.compute_lte(a, b)
     logger.info('Calculation ended completely! ')
     print(result)
     save_result(result)
@@ -57,8 +58,11 @@ def save_result(result):
 if __name__ == '__main__':
     # Read csv file of vectors and put the vectors to method start_lte.
     vectors = []
+    this_vec_type = VecFile
+    if use_pca_vec:
+        this_vec_type = PcaVecFile
     logger.info('Start to recover the vectors of all users. ')
-    with open(FileNameTemplate.format(dataType=VecFile.format(modelType='doc2vec' if w2v_or_d2v else 'word2vec'),
+    with open(FileNameTemplate.format(dataType=this_vec_type.format(modelType='doc2vec' if w2v_or_d2v else 'word2vec'),
                                       samples=N_DataConfig['N_Samples'],
                                       topics=N_DataConfig['N_Dims'],
                                       users=N_DataConfig['N_Users'],
