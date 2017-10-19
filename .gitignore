@@ -2,9 +2,13 @@
 /Data/*
 /Data/word2vec/*
 /Data/doc2vec/*
+/Data(2)/*
+/Data(2)/word2vec/*
+/Data(2)/doc2vec/*
 __pycache__/*
 tempPy/*
 /utils/knn/*
+/lib/*
 
 # Files
 *.pyc

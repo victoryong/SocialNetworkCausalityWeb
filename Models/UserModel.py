@@ -6,13 +6,14 @@ Created on Sat Apr 15 16:20:40 2017
 """
 import math
 from datetime import datetime
+import re
 
 # from Models.TopicModel import TopicModel
-from utils import Logging
+from utils import logging
 from utils.ConfigAll import StartDatetime, EndDatetime, Duration, N_Topics, TimeFormat
 from utils.WordsSegmentation import tokenize
 
-logger = Logging.get_console_logger('UserActivity')
+logger = logging.get_console_logger('UserActivity')
 
 
 class UserActivity:
@@ -40,7 +41,7 @@ class UserActivity:
         :return: Array of binary data.
         """
         if not len(self.activities):
-            logger.error('No any activity exist! Cannot make sequence. ')
+            logger.error('No activity exist! Failed to make sequence. ')
             return []
 
         dur_sec = Duration * 3600
@@ -57,9 +58,10 @@ class UserActivity:
             i.index = d
             se[d] = 1
             if d > curr:
-                text_list.append(i.content.replace(u'\u200b', ''))
+                text_list.append(i.content.replace(u'\u200b', '').replace(r'(\r)?\n', ''))
                 curr = i.index
 
+        # self.textList = text_list
         self.textList = tokenize(text_list)
         self.sequence = se
 
@@ -83,7 +85,7 @@ class ActivityInfo:
     """Object of an activity, includes useful information of one activity"""
     def __init__(self, p_time='2017-03-31 00:00', content=''):
         self.pubTime = p_time
-        self.content = content
+        self.content = re.sub(r'\r', '', re.sub(r'(\r)?\n', '', content))
         self.index = -1
 
     @property

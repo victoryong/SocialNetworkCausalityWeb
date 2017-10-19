@@ -4,7 +4,7 @@ import numpy as np
 import csv
 
 from utils.ConfigAll import N_Topics, d2vDir
-from utils.Logging import get_console_logger
+from utils.logging import get_console_logger
 
 logger = get_console_logger('Doc2Vec')
 
@@ -81,7 +81,7 @@ def make_vectors_according_to_sequences(model, sentences, sequences, out_path):
     logger.info('Saving vectors to %s ......' % out_path)
     _save_vectors(vec, out_path)
     logger.info('Saving vectors to %s completely! ' % out_path)
-    logger.info('ALl vectors are made successfully! ')
+    logger.info('All vectors are made successfully! ')
     return vec
 
 if __name__ == '__main__':

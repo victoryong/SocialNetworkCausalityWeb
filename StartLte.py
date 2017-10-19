@@ -10,7 +10,7 @@ Vectors are generated in last step StartW2vModel.
 import numpy as np
 import csv
 from utils.ConfigAll import N_DataConfig, FileNameTemplate, VecFile, PcaVecFile, ResultFile, w2v_or_d2v, use_pca_vec
-from utils.Logging import get_console_logger
+from utils.logging import get_console_logger
 from utils.lte import LocalTransferEntropy, LocalTransferEntropyPy
 
 logger = get_console_logger('StartLte')

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Chinese-master/dict/baidu-stopwords.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Chinese-master/dict/chinese-stopwords.txt" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/Chinese-master/dict/哈工大停用词表.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Chinese-master/dict/四川大学机器智能实验室停用词库.txt" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

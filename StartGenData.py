@@ -9,14 +9,11 @@ We can obtain id list, samples, all texts after segmentation and user model list
 significant is all these data are saved into files so that we can load them easily when go to next step.
 """
 
-import numpy as np
-
-from utils import Logging
-from utils.GenData import DataGenerator
-from utils.methods import getGraph
+from utils import logging
+from utils.gendata import DataGenerator
 from utils.ConfigAll import FileNameTemplate
 
-logger = Logging.get_console_logger('StartGenData')
+logger = logging.get_console_logger('StartGenData')
 
 
 def start_gen_data():

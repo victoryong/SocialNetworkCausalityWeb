@@ -17,7 +17,7 @@ def start_get_vectors(w2v_model, txt_file_path, all_seq):
     file = open(txt_file_path, 'r', encoding='utf-8') if txt_file_path.find('\n') < 0 else StringIO(txt_file_path)
     sentences = []
     for sen in file.readlines():
-        sentences.append(sen.strip().split(' '))
+        sentences.append(sen.split(' '))
     file.close()
     if w2v_or_d2v:
         from Models.doc2vec import make_vectors_according_to_sequences

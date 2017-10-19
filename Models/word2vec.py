@@ -5,7 +5,7 @@ import numpy as np
 import csv
 
 from utils.ConfigAll import N_Topics
-from utils.Logging import get_console_logger
+from utils.logging import get_console_logger
 
 logger = get_console_logger('Word2Vec')
 

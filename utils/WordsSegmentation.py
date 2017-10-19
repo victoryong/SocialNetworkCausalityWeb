@@ -8,7 +8,7 @@ Created on Sat June 24 20:20 2017
 import jieba
 # import os
 
-from utils.Logging import get_console_logger
+from utils.logging import get_console_logger
 
 logger = get_console_logger('WordsSegmentation')
 
@@ -30,7 +30,7 @@ def tokenize(sentences, output_path=None, keep_tokens=None, filter_tokens=None):
     logger.info('segment sentence...')
     if filter_tokens and keep_tokens:
         for line in sentences:
-            seg = jieba.lcut(line.replace('\n', ''))
+            seg = jieba.lcut(line.replace(r'\r?\n', ''))
             filter_seg = []
             for token in seg:
                 if token not in filter_tokens:
@@ -55,7 +55,7 @@ def tokenize(sentences, output_path=None, keep_tokens=None, filter_tokens=None):
             seg_sen.append(filter_seg)
     else:
         for sen in sentences:
-            seg = jieba.lcut(sen.replace('\n', ''))
+            seg = jieba.lcut(sen.replace(r'(\r)?\n', ''))
             seg_sen.append(seg)
     # if output_path:
     #     f = open(output_path, 'w')

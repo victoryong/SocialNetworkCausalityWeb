@@ -2,24 +2,26 @@
 """
 Created on Sat Apr 15 15:31:40 2017
 
-@author: Victor Xie
+@author: Xie Yong
 
 The code is aimed at generating data from original data scrawled on Tweet and saving data
 of user id list, sequences and text list(after segmentation) to files.
 """
+import sys
 import csv
 import threading
 import time
+import re
 
 import pymongo
 
 from Models.UserModel import ActivityInfo
 from Models.UserModel import UserActivity
-from utils import Logging
+from utils import logging
 from utils.ConfigAll import *
 
 
-logger = Logging.get_console_logger('GenData')
+logger = logging.get_console_logger('GenData')
 totalCount = 0
 totalFinishCount = 0
 db_client = None
@@ -62,6 +64,13 @@ def check_for_tweets(uid, user_model):
     # print ua
     user_model.append(ua)
     return ua
+
+
+def get_user_tweet_indices():
+    with open(sys.path[1] + '/Data/Indices.txt', 'r') as fp:
+        indices = fp.readlines()
+        # print(indices)
+        return list(map(lambda x: int(x.strip()), indices))
 
 
 class DataGenerator:
@@ -119,6 +128,14 @@ class DataGenerator:
             logger.error('No user model! ')
             return
 
+        user_tweet_indices = ['0\n']
+        total = 0
+        for item in user_model:
+            total += sum(item.sequence)
+            user_tweet_indices.append(str(total) + '\n')
+        with open(sys.path[1] + '/Data/Indices.txt', 'w') as fp:
+            fp.writelines(user_tweet_indices)
+
         n_samples = len(user_model[0].sequence)
         samples = []
         all_texts = ''
@@ -134,15 +151,15 @@ class DataGenerator:
         with open(fpath.format(dataType=SeqFile, samples=n_samples, users=n_users, topics=N_Topics, postfix='csv'),
                   'w', newline='') as fseq, \
                 open(fpath.format(dataType=TextFile, samples=n_samples, users=n_users, topics=N_Topics, postfix='txt'),
-                     'w', newline='', encoding='utf-8') as ftxt:
+                     'w', encoding='utf-8') as ftxt:
             logger.info('Start writing samples, topic vectors and text after segmentation into files...')
             seqwriter = csv.writer(fseq)
             for um in user_model:
                 samples.append(um.sequence)
                 seqwriter.writerow(um.sequence)
-
                 str_text = '\n'.join(um.textList) + '\n'
                 ftxt.write(str_text)
+                # ftxt.writelines(um.textList)
                 all_texts += str_text
 
             logger.info('Successfully wrote to %s, %s!' % (fseq.name, ftxt.name))
@@ -155,3 +172,4 @@ if __name__ == '__main__':
     u_model = []
     u_model = gen.get_user_model(debug_option=2)
     gen.save_data(u_model)
+    print(get_user_tweet_indices())

@@ -11,7 +11,7 @@ from datetime import datetime
 import os
 
 # Mongodb client information
-ClientIp = "10.21.25.40"
+ClientIp = "10.21.25.36"
 Port = 27017
 DbName = "Sina_cw1"
 CollectionTweets = 'Tweets'
@@ -52,11 +52,11 @@ ResultFile = '{modelType}/Result'
 N_DataConfig = {'N_Samples': 8760, 'N_Dims': 100, 'N_Users': 21}
 
 # 2vec model dir
-w2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/word2vec'
-d2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/doc2vec'
-# w2vDir = '~/xy/PycharmProject/SocialNetwork_web/Data/word2vec' # Linux
-# d2vDir = '~/xy/PycharmProject/SocialNetwork_web/Data/doc2vec' # Linux
-w2v_or_d2v = 0  # 0 for w2v and others for d2v
+# w2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/word2vec'
+# d2vDir = 'E:/StudyTime!/Causality/Projects/SocialNetwork_web/Data/doc2vec'
+w2vDir = '/home/xy/PycharmProjects/SocialNetworkCausalityWeb/Data/word2vec' # Linux
+d2vDir = '/home/xy/PycharmProjects/SocialNetworkCausalityWeb/Data/doc2vec' # Linux
+w2v_or_d2v = 1  # 0 for w2v and others for d2v
 # w2v_or_d2v = 0
 
 use_pca_vec = True  # False for original vectors and True for pca vectors
